@@ -36,7 +36,11 @@ def main():
 
 
 def empty_buffer(this_file_page_buffer, outfile_i, combined_path):
-    out_filename = path.join(path.dirname(combined_path), f"split{outfile_i}.pdf")
+    out_filename = path.join(path.dirname(combined_path),
+                             f"{path.splitext(path.basename(combined_path))[0]} split {outfile_i:02}.pdf")
+    if path.isfile(out_filename):
+        raise FileExistsError(f"Tried to save file {path.basename(out_filename)} but it already exists. Please delete "
+                              f"or move so it doesn't get overwrittn.")
     out_pdf = PdfFileWriter()
     for buffered_page in this_file_page_buffer:
         out_pdf.addPage(buffered_page)
