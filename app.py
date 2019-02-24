@@ -1,9 +1,19 @@
 from os import path
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
+from gooey import Gooey, GooeyParser
 
 
-def main(combined_path):
+@Gooey(program_name="PDF Splitter",
+       program_description="Split a PDF on its blank pages")
+def main():
+    parser = GooeyParser()
+    parser.add_argument("path", type=str, widget='FileChooser',)
+
+    args = parser.parse_args()
+
+    combined_path = args.path
+
     with open(combined_path, mode="rb") as combined_file:
         combined_pdf = PdfFileReader(combined_file)
 
@@ -35,4 +45,4 @@ def empty_buffer(this_file_page_buffer, outfile_i, combined_path):
 
 
 if __name__ == '__main__':
-    main("/Users/cai/Desktop/combined test.pdf")
+    main()
