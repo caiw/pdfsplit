@@ -1,7 +1,11 @@
-from os import path
+from sys import stdout
+from os import path, fdopen
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from gooey import Gooey, GooeyParser
+
+nonbuffered_stdout = fdopen(stdout.fileno(), 'w', 0)
+stdout = nonbuffered_stdout
 
 
 @Gooey(program_name="PDF Splitter",

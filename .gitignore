@@ -21,3 +21,10 @@ venv.bak/
 
 # Pycharm
 .idea
+
+# Deploy
+build/
+dist/
+
+# Cache
+__pycache__/
