@@ -1,24 +1,20 @@
+from argparse import ArgumentParser
 from sys import stdout
 from os import path, fdopen
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
-from gooey import Gooey, GooeyParser
 
 nonbuffered_stdout = fdopen(stdout.fileno(), 'w', 0)
 stdout = nonbuffered_stdout
 
 
-@Gooey(program_name="PDF Splitter",
-       program_description="Split a PDF on its blank pages. Segments will be saved in the same directory as the "
-                           "original file.")
 def main():
+    text_preview_length = 30
 
-	text_preview_length = 30
-
-    parser = GooeyParser()
+    parser = ArgumentParser()
     parser.add_argument("path",
                         type=str,
-                        widget='FileChooser',
+                        # widget='FileChooser',
                         # title="Combined PDF file."
                         )
     args = parser.parse_args()
@@ -44,8 +40,8 @@ def main():
                 this_file_page_buffer = []
                 outfile_i += 1
             else:
-            	print(f"Page {page_i} contained text \"{page_text[:text_preview_length]}...\"")
-            	print(f"Adding to next document buffer")
+                print(f"Page {page_i} contained text \"{page_text[:text_preview_length]}...\"")
+                print(f"Adding to next document buffer")
                 this_file_page_buffer.append(p)
 
         empty_buffer(this_file_page_buffer, outfile_i, combined_path)
@@ -57,7 +53,7 @@ def empty_buffer(this_file_page_buffer, outfile_i, combined_path):
     if path.isfile(out_filename):
         raise FileExistsError(f"Tried to save file {path.basename(out_filename)} but it already exists. Please delete "
                               f"or move so it doesn't get overwrittn.")
-	print(f"Saving current page buffer to \"{path.basename(out_filename)}\"...")
+    print(f"Saving current page buffer to \"{path.basename(out_filename)}\"...")
     out_pdf = PdfFileWriter()
     for buffered_page in this_file_page_buffer:
         out_pdf.addPage(buffered_page)
