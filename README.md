@@ -1,5 +1,6 @@
 # pdfsplit
-Split pdfs on blank pages
+
+Split pdfs on blank pages.
 
 Install dependences like:
 
