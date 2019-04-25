@@ -8,7 +8,7 @@ Install dependences like:
 
 Use from Terminal command line like:
 
-	python pdfsplit "/absolute/path/to/combined.pdf"
+	python pdfsplit.py "/absolute/path/to/combined.pdf"
   
 It'll make a set of pdfs in the same directory (`/absolute/path/to/`), splitting the original on its blank pages.
 
